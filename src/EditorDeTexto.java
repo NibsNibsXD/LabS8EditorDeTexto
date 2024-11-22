@@ -16,6 +16,10 @@ import java.io.*;
  */
 
 
+//LAB SEMANA 7 (LAB # 6)
+//JORGE LUIS AGUIRRE SALAZAR 22341189 -  ING EN SISTEMAS COMPUTACIONALES / UNITEC SAN PEDRO SULA
+//11/22/2024
+
 public class EditorDeTexto extends JFrame {
 
     
