@@ -98,14 +98,17 @@ public class EditorDeTexto extends JFrame {
     }
     
     private void cambiarFuente() {
-        //cambiar fuente
+        //fuente
     }
 
-    
+   
     private void cambiarTamano() {
-        //size del texto
+        int tamanoSeleccionado = (int) comboTamanos.getSelectedItem();
+        StyledDocument doc = areaDeTexto.getStyledDocument();
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        StyleConstants.setFontSize(attr, tamanoSeleccionado);
+        areaDeTexto.setCharacterAttributes(attr, false);
     }
-
    
     private void cambiarColor() {
         //el color con el if
@@ -113,12 +116,21 @@ public class EditorDeTexto extends JFrame {
 
     
     private void aplicarNegrita() {
-        //bold
+        StyledDocument doc = areaDeTexto.getStyledDocument();
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        boolean isBold = StyleConstants.isBold(areaDeTexto.getCharacterAttributes());
+        StyleConstants.setBold(attr, !isBold);
+        areaDeTexto.setCharacterAttributes(attr, false);
     }
+
 
     
     private void aplicarCursiva() {
-        //italic
+        StyledDocument doc = areaDeTexto.getStyledDocument();
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        boolean isItalic = StyleConstants.isItalic(areaDeTexto.getCharacterAttributes());
+        StyleConstants.setItalic(attr, !isItalic);
+        areaDeTexto.setCharacterAttributes(attr, false);
     }
 
     // Método para guardar el archivo
