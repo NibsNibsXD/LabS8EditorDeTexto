@@ -141,6 +141,7 @@ public class EditorDeTexto extends JFrame {
         
         if (colorSeleccionado != null) {
             SimpleAttributeSet attr = new SimpleAttributeSet();
+            
             StyleConstants.setForeground(attr, colorSeleccionado);
             areaDeTexto.setCharacterAttributes(attr, false);
 
@@ -163,6 +164,7 @@ public class EditorDeTexto extends JFrame {
     private void aplicarNegrita() {
         StyledDocument doc = areaDeTexto.getStyledDocument();
         SimpleAttributeSet attr = new SimpleAttributeSet();
+        
         boolean isBold = StyleConstants.isBold(areaDeTexto.getCharacterAttributes());
         StyleConstants.setBold(attr, !isBold);
         areaDeTexto.setCharacterAttributes(attr, false);
