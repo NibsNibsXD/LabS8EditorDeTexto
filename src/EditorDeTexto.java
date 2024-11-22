@@ -97,8 +97,12 @@ public class EditorDeTexto extends JFrame {
         });
     }
     
-    private void cambiarFuente() {
-        //fuente
+        private void cambiarFuente() {
+        String fuenteSeleccionada = (String) comboFuentes.getSelectedItem();
+        StyledDocument doc = areaDeTexto.getStyledDocument();
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(attr, fuenteSeleccionada);
+        areaDeTexto.setCharacterAttributes(attr, false);
     }
 
    
@@ -111,7 +115,12 @@ public class EditorDeTexto extends JFrame {
     }
    
     private void cambiarColor() {
-        //el color con el if
+        Color colorSeleccionado = JColorChooser.showDialog(this, "Seleccionar Color", Color.BLACK);
+        if (colorSeleccionado != null) {
+            SimpleAttributeSet attr = new SimpleAttributeSet();
+            StyleConstants.setForeground(attr, colorSeleccionado);
+            areaDeTexto.setCharacterAttributes(attr, false);
+        }
     }
 
     
