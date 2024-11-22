@@ -25,11 +25,14 @@ public class EditorDeTexto extends JFrame {
     private JButton botonCursiva;
     private JButton botonGuardar;
     private JButton botonAbrir;
+    private GestorArchivos gestorArchivos;
 
     public EditorDeTexto() {
         super("Editor de Texto");
         inicializarComponentes();
+        gestorArchivos = new GestorArchivos(this, areaDeTexto);
     }
+
 
     private void inicializarComponentes() {
         
@@ -142,14 +145,14 @@ public class EditorDeTexto extends JFrame {
         areaDeTexto.setCharacterAttributes(attr, false);
     }
 
-    // Método para guardar el archivo
+   
     private void guardarArchivo() {
-        //pendiente hacer clase para el archivo
+        gestorArchivos.guardarArchivo();
     }
 
     // Método para abrir un archivo
     private void abrirArchivo() {
-        //igual ene sta
+        gestorArchivos.abrirArchivo();
     }
 
     
