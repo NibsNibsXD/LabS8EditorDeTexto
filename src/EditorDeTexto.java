@@ -15,8 +15,10 @@ import java.io.*;
  * @author Jorge Aguirre
  */
 
+
 public class EditorDeTexto extends JFrame {
 
+    
     private JTextPane areaDeTexto;
     private JComboBox<String> comboFuentes;
     private JComboBox<Integer> comboTamanos;
@@ -26,13 +28,15 @@ public class EditorDeTexto extends JFrame {
     private JButton botonGuardar;
     private JButton botonAbrir;
     private GestorArchivos gestorArchivos;
-
+    private HistorialColores historialColores;
+    
+    
+    
     public EditorDeTexto() {
         super("Editor de Texto");
         inicializarComponentes();
         gestorArchivos = new GestorArchivos(this, areaDeTexto);
     }
-
 
     private void inicializarComponentes() {
         
@@ -42,7 +46,7 @@ public class EditorDeTexto extends JFrame {
 
         
         areaDeTexto = new JTextPane();
-        JScrollPane scrollPane = new JScrollPane(areaDeTexto);
+        JScrollPane scrollPaneTexto = new JScrollPane(areaDeTexto);
 
         
         JToolBar barraHerramientas = new JToolBar();
@@ -54,12 +58,12 @@ public class EditorDeTexto extends JFrame {
         comboFuentes.addActionListener(e -> cambiarFuente());
 
         
+        
+        
         Integer[] tamanos = {8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40};
         comboTamanos = new JComboBox<>(tamanos);
         comboTamanos.addActionListener(e -> cambiarTamano());
 
-     
-        
         
         botonColor = new JButton("Color");
         botonColor.addActionListener(e -> cambiarColor());
@@ -78,6 +82,8 @@ public class EditorDeTexto extends JFrame {
 
         
         
+        
+      
         barraHerramientas.add(comboFuentes);
         barraHerramientas.add(comboTamanos);
         barraHerramientas.add(botonColor);
@@ -87,43 +93,70 @@ public class EditorDeTexto extends JFrame {
         barraHerramientas.add(botonAbrir);
 
         
+        historialColores = new HistorialColores(e -> colorSeleccionadoDelHistorial(e));
+
         
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal.add(barraHerramientas, BorderLayout.NORTH);
+        panelPrincipal.add(scrollPaneTexto, BorderLayout.CENTER);
+        panelPrincipal.add(historialColores, BorderLayout.WEST);
+
         
-        setLayout(new BorderLayout());
-        add(barraHerramientas, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+        setContentPane(panelPrincipal);
     }
+    
+    
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new EditorDeTexto().setVisible(true);
         });
     }
+
     
-        private void cambiarFuente() {
+    
+    private void cambiarFuente() {
         String fuenteSeleccionada = (String) comboFuentes.getSelectedItem();
-        StyledDocument doc = areaDeTexto.getStyledDocument();
         SimpleAttributeSet attr = new SimpleAttributeSet();
         StyleConstants.setFontFamily(attr, fuenteSeleccionada);
+        
         areaDeTexto.setCharacterAttributes(attr, false);
     }
 
-   
+    
     private void cambiarTamano() {
         int tamanoSeleccionado = (int) comboTamanos.getSelectedItem();
-        StyledDocument doc = areaDeTexto.getStyledDocument();
         SimpleAttributeSet attr = new SimpleAttributeSet();
+        
         StyleConstants.setFontSize(attr, tamanoSeleccionado);
         areaDeTexto.setCharacterAttributes(attr, false);
     }
-   
+
+    
+    
+    
+    
     private void cambiarColor() {
         Color colorSeleccionado = JColorChooser.showDialog(this, "Seleccionar Color", Color.BLACK);
+        
         if (colorSeleccionado != null) {
             SimpleAttributeSet attr = new SimpleAttributeSet();
             StyleConstants.setForeground(attr, colorSeleccionado);
             areaDeTexto.setCharacterAttributes(attr, false);
+
+            // Agregar el color al historial
+            historialColores.agregarColor(colorSeleccionado);
         }
+    }
+
+    
+    
+    
+    private void colorSeleccionadoDelHistorial(ActionEvent e) {
+        Color colorSeleccionado = (Color) e.getSource();
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        StyleConstants.setForeground(attr, colorSeleccionado);
+        areaDeTexto.setCharacterAttributes(attr, false);
     }
 
     
@@ -135,7 +168,8 @@ public class EditorDeTexto extends JFrame {
         areaDeTexto.setCharacterAttributes(attr, false);
     }
 
-
+    
+    
     
     private void aplicarCursiva() {
         StyledDocument doc = areaDeTexto.getStyledDocument();
@@ -145,16 +179,16 @@ public class EditorDeTexto extends JFrame {
         areaDeTexto.setCharacterAttributes(attr, false);
     }
 
-   
+    
     private void guardarArchivo() {
         gestorArchivos.guardarArchivo();
     }
 
-    // Método para abrir un archivo
+    
     private void abrirArchivo() {
         gestorArchivos.abrirArchivo();
     }
 
     
-
+    
 }
