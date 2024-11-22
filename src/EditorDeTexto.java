@@ -15,7 +15,6 @@ import java.io.*;
  * @author Jorge Aguirre
  */
 
-
 public class EditorDeTexto extends JFrame {
 
     private JTextPane areaDeTexto;
@@ -49,26 +48,32 @@ public class EditorDeTexto extends JFrame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String[] fuentes = ge.getAvailableFontFamilyNames();
         comboFuentes = new JComboBox<>(fuentes);
-        
+        comboFuentes.addActionListener(e -> cambiarFuente());
 
         
         Integer[] tamanos = {8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40};
         comboTamanos = new JComboBox<>(tamanos);
-        
+        comboTamanos.addActionListener(e -> cambiarTamano());
 
+     
+        
         
         botonColor = new JButton("Color");
+        botonColor.addActionListener(e -> cambiarColor());
+
+        
         botonNegrita = new JButton("Negrita");
+        botonNegrita.addActionListener(e -> aplicarNegrita());
         botonCursiva = new JButton("Cursiva");
+        botonCursiva.addActionListener(e -> aplicarCursiva());
 
-        // Botones de archivo
+        
         botonGuardar = new JButton("Guardar");
-        
-        
-        
+        botonGuardar.addActionListener(e -> guardarArchivo());
         botonAbrir = new JButton("Abrir");
-       
+        botonAbrir.addActionListener(e -> abrirArchivo());
 
+        
         
         barraHerramientas.add(comboFuentes);
         barraHerramientas.add(comboTamanos);
@@ -79,8 +84,53 @@ public class EditorDeTexto extends JFrame {
         barraHerramientas.add(botonAbrir);
 
         
+        
+        
         setLayout(new BorderLayout());
         add(barraHerramientas, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
     }
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new EditorDeTexto().setVisible(true);
+        });
+    }
+    
+    private void cambiarFuente() {
+        //cambiar fuente
+    }
+
+    
+    private void cambiarTamano() {
+        //size del texto
+    }
+
+   
+    private void cambiarColor() {
+        //el color con el if
+    }
+
+    
+    private void aplicarNegrita() {
+        //bold
+    }
+
+    
+    private void aplicarCursiva() {
+        //italic
+    }
+
+    // Método para guardar el archivo
+    private void guardarArchivo() {
+        //pendiente hacer clase para el archivo
+    }
+
+    // Método para abrir un archivo
+    private void abrirArchivo() {
+        //igual ene sta
+    }
+
+    
+
 }
